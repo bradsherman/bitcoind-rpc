@@ -28,6 +28,7 @@ import Data.Aeson (
     withText,
     (.=),
  )
+import Data.Aeson.Key (Key, fromText)
 import Data.Aeson.Types (Pair)
 import Data.Bifunctor (first)
 import Data.ByteString.Base64 (decodeBase64, encodeBase64)
@@ -46,8 +47,8 @@ import Haskoin.Util (decodeHex, encodeHex)
 partialObject :: [Maybe Pair] -> Value
 partialObject = object . catMaybes
 
-(.=?) :: ToJSON a => Text -> Maybe a -> Maybe (Text, Value)
-k .=? mv = (k .=) <$> mv
+(.=?) :: ToJSON a => Text -> Maybe a -> Maybe (Key, Value)
+k .=? mv = (fromText k .=) <$> mv
 
 -- | Helper function for decoding POSIX timestamps
 utcTime :: Word64 -> UTCTime

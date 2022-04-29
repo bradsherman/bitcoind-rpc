@@ -73,6 +73,7 @@ import Servant.Bitcoind (
     O,
     toBitcoindClient,
  )
+import Data.Aeson.Key (fromText)
 
 data MempoolTestResult = MempoolTestResult
     { testTxid :: TxHash
@@ -255,11 +256,12 @@ data PsbtOutputs = PsbtOutputs
 instance ToJSON PsbtOutputs where
     toJSON outputs =
         toJSON $
-            (fmap toAddrObject . psbtOutputAddrs) outputs
+            (fmap toAddrObject . map toAesonKey . psbtOutputAddrs) outputs
                 <> (foldMap toDataObject . psbtOutputData) outputs
       where
         toAddrObject (addr, amount) = object [addr .= satsToBTCText amount]
         toDataObject hex = [object ["data" .= hex]]
+        toAesonKey (k, v) = (fromText k, v)
 
 {- | Creates a transaction in the Partially Signed Transaction format. Implements the Creator role.
 

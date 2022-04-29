@@ -62,6 +62,7 @@ import Servant.Client.JsonRpc (
     JsonRpcErr (..),
     JsonRpcResponse (..),
  )
+import Data.Kind (Type)
 
 -- | Exceptions resulting from interacting with bitcoind
 data BitcoindException
@@ -123,7 +124,7 @@ data DefZero
 instance Num a => HasDefault DefZero a where getDefault _ = 0
 
 class HasBitcoindClient x where
-    type TheBitcoindClient x :: *
+    type TheBitcoindClient x :: Type
     toBitcoindClient :: p x -> TheBitcoindClient x
 
 instance
@@ -198,8 +199,8 @@ type NakedClient =
  functions with endpoint specific arguments.
 -}
 class Rewrite a where
-    type RewriteFrom a :: *
-    type RewriteTo a :: *
+    type RewriteFrom a :: Type
+    type RewriteTo a :: Type
     rewriteRpc :: p a -> RewriteFrom a -> RewriteTo a
 
 -- | Handle endpoints which do not have an expected return value

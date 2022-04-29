@@ -7,3 +7,15 @@ package bitcoind-rpc
 
 package bitcoind-regtest
   ghc-options: -Werror
+
+source-repository-package
+    type: git
+    location: https://github.com/bradsherman/servant-jsonrpc.git
+    tag: a4ce419201dd5d116ec0e9d1d189ebc68c6f3ce0
+    subdir: servant-jsonrpc-client
+
+source-repository-package
+    type: git
+    location: https://github.com/bradsherman/servant-jsonrpc.git
+    tag: a4ce419201dd5d116ec0e9d1d189ebc68c6f3ce0
+    subdir: servant-jsonrpc
